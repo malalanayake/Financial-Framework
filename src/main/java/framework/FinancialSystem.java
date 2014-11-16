@@ -1,5 +1,8 @@
 package framework;
 
+import framework.operation.Operation;
+import framework.operation.Transaction;
+
 /**
  *
  * @author malalanayake
@@ -10,11 +13,11 @@ public class FinancialSystem {
 
     }
 
-    public void operateAccount() {
+    public void doOperation(Operation operation) {
 
     }
-
-    public void operateCCAccount() {
+    
+    public void doTransaction(Transaction transaction) {
 
     }
 

@@ -12,3 +12,6 @@
 hs_err_pid*
 /target/
 /.settings/
+/nbactions.xml
+/nbactions-release-profile.xml
+/nb-configuration.xml
