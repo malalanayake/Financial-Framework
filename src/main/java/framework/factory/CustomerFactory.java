@@ -7,7 +7,8 @@ import framework.model.Customer;
  * @author malalanayake
  */
 public class CustomerFactory {
-    public Customer getInstance(String type){
+
+    public Customer getInstance(String type) {
         return null;
     }
 }

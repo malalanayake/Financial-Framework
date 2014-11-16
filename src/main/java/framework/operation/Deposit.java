@@ -4,6 +4,6 @@ package framework.operation;
  *
  * @author malalanayake
  */
-public class Deposit implements Transaction{
+public class Deposit implements Transaction {
 
 }
