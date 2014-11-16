@@ -1,7 +1,7 @@
 package framework.operation;
 
 import framework.model.IAccount;
-import framework.model.IPerson;
+import framework.model.IPersonal;
 
 /**
  *
@@ -9,7 +9,7 @@ import framework.model.IPerson;
  */
 public class AddPersonalAccount implements Operation {
 
-    public AddPersonalAccount(IPerson person, IAccount account) {
+    public AddPersonalAccount(IPersonal person, IAccount account) {
     }
     
     public void execute() {

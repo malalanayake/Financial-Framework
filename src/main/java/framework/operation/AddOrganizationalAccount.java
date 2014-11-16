@@ -1,7 +1,7 @@
 package framework.operation;
 
 import framework.model.IAccount;
-import framework.model.IOrganization;
+import framework.model.IOrganizational;
 
 /**
  *
@@ -9,7 +9,7 @@ import framework.model.IOrganization;
  */
 public class AddOrganizationalAccount implements Operation{
 
-    public AddOrganizationalAccount(IOrganization organization, IAccount account) {
+    public AddOrganizationalAccount(IOrganizational organization, IAccount account) {
     }
     
     public void execute() {

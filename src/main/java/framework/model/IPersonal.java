@@ -4,6 +4,6 @@ package framework.model;
  *
  * @author malalanayake
  */
-public interface IPerson {
+public interface IPersonal {
 
 }
