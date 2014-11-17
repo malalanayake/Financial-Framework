@@ -13,6 +13,8 @@ public interface IAccount {
     public void addInterest();
 
     public int getInterestRate();
-    
+
     public void notifyToCustomer();
+
+    public ICustomer getCustomer();
 }
