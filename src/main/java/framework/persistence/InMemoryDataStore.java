@@ -1,5 +1,7 @@
 package framework.persistence;
 
+import framework.model.Account;
+import framework.model.Customer;
 import framework.model.IAccount;
 import framework.model.ICustomer;
 import java.util.ArrayList;
@@ -26,7 +28,15 @@ public class InMemoryDataStore implements DataStore{
 
     @Override
     public void createAccount(IAccount account) {
-        
+        ICustomer iCustomer = account.getCustomer();
+        if(dataStorage.get(iCustomer) != null){
+            dataStorage.get(iCustomer).add(account);
+        }
+        else{
+            List<IAccount> iAccounts = new ArrayList<>();
+            iAccounts.add(account);
+            dataStorage.put(iCustomer, iAccounts);
+        }
     }
 
 }
