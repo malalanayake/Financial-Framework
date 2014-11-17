@@ -10,11 +10,21 @@ import java.util.List;
  */
 public class PersistenceFacade {
 
+    DataStore dataStore = new InMemoryDataStore();
+
+    public DataStore getDataStore() {
+        return dataStore;
+    }
+
+    public void setDataStore(DataStore dataStore) {
+        this.dataStore = dataStore;
+    }
+
     public List<IAccount> getAllAccounts() {
-        return null;
+        return dataStore.getAllAccount();
     }
 
     public List<ICustomer> getAllCustomers() {
-        return null;
+        return dataStore.getAllCustomer();
     }
 }

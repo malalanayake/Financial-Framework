@@ -2,6 +2,7 @@ package framework.persistence;
 
 import framework.model.IAccount;
 import framework.model.ICustomer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,18 +10,21 @@ import java.util.List;
  *
  * @author malalanayake
  */
-public class InMemoryDataStore {
+public class InMemoryDataStore implements DataStore{
 
     HashMap<ICustomer, List<IAccount>> dataStorage = new HashMap();
 
+    @Override
     public List<ICustomer> getAllCustomer() {
-        return null;
+        return new ArrayList(dataStorage.keySet());
     }
 
+    @Override
     public List<IAccount> getAllAccount() {
-        return null;
+        return new ArrayList(dataStorage.values());
     }
 
+    @Override
     public void createAccount(IAccount account) {
         
     }
