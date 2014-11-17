@@ -9,21 +9,10 @@ import java.util.Date;
 public class Entry {
 
     private Date date;
-    private Double amount;
+    private double amount;
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
+    public Entry(Date date, double amount) {
         this.date = date;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
