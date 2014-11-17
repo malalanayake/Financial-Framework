@@ -3,9 +3,6 @@ package creditcard.ui;
 /*
  A basic implementation of the JDialog class.
  */
-import banking.ui.BankFrm;
-import java.awt.*;
-import javax.swing.*;
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog {
 

@@ -1,9 +1,5 @@
 package creditcard.ui;
 
-import banking.ui.BankFrm;
-import java.awt.*;
-import javax.swing.*;
-
 public class JDialog_Deposit extends javax.swing.JDialog {
 
     private CardFrm parentframe;

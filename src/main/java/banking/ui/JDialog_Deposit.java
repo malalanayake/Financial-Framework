@@ -1,8 +1,5 @@
 package banking.ui;
 
-import java.awt.*;
-import javax.swing.*;
-
 public class JDialog_Deposit extends javax.swing.JDialog {
 
     private BankFrm parentframe;
