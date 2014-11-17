@@ -8,11 +8,16 @@ import framework.model.IAccount;
  */
 public class AddEntry implements Transaction {
 
-    public AddEntry(IAccount account) {
+    IAccount account;
+    double amount;
+    
+    public AddEntry(IAccount account, double amount) {
+        this.account = account;
+        this.amount = amount;
     }
 
     public void execute() {
-
+        this.account.addEntry(amount);
     }
 
 }
