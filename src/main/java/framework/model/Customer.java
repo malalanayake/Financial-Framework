@@ -14,6 +14,14 @@ public abstract class Customer implements ICustomer {
     
     private List<IAccount> accounts = new ArrayList<>();;
 
+    public List<IAccount> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<IAccount> accounts) {
+        this.accounts = accounts;
+    }
+
     public String getName() {
         return name;
     }

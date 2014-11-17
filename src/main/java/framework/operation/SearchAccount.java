@@ -10,12 +10,18 @@ import java.util.List;
  */
 public class SearchAccount implements Functor<ICustomer, List<IAccount>> {
 
+    List<IAccount> accounts;
+
+    public SearchAccount() {
+        accounts = null;
+    }
+
     public void compute(ICustomer data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        accounts = data.getAccounts();
     }
 
     public List<IAccount> getValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return accounts;
     }
 
 }
