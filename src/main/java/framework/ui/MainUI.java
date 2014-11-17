@@ -6,6 +6,6 @@ import javax.swing.JFrame;
  *
  * @author malalanayake
  */
-public abstract class MainUI extends JFrame{
+public abstract class MainUI extends JFrame {
 
 }

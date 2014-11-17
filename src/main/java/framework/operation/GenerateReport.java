@@ -11,7 +11,6 @@ public class GenerateReport implements Operation {
     public GenerateReport(ReportGenerator reportGenerator) {
     }
 
-    
     public void execute() {
 
     }

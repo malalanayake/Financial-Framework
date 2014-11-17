@@ -9,11 +9,12 @@ import java.util.List;
  * @author malalanayake
  */
 public class PersistenceFacade {
-    public List<IAccount> getAllAccounts(){
+
+    public List<IAccount> getAllAccounts() {
         return null;
     }
-    
-    public List<ICustomer> getAllCustomers(){
+
+    public List<ICustomer> getAllCustomers() {
         return null;
     }
 }

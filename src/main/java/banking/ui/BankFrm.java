@@ -1,16 +1,16 @@
 package banking.ui;
 
 import framework.ui.MainUI;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
 
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends MainUI{
+public class BankFrm extends MainUI {
 
     /**
      * **

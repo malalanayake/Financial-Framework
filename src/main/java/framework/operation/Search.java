@@ -11,10 +11,9 @@ import java.util.List;
  */
 public class Search<R> implements Operation {
 
-    Functor<ICustomer,R> searchFunctor;
+    Functor<ICustomer, R> searchFunctor;
     Predicate<ICustomer> predicate;
     PersistenceFacade persistenceFacade;
-    
 
     public Search(Predicate<ICustomer> predicate, Functor<ICustomer, R> searchFunctor) {
         this.searchFunctor = searchFunctor;

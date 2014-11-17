@@ -11,9 +11,9 @@ public class AddAccount implements Operation {
 
     public AddAccount(IPersonal person, IAccount account) {
     }
-    
+
     public void execute() {
-        
+
     }
 
 }
