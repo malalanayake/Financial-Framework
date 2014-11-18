@@ -1,5 +1,11 @@
 package creditcard.ui;
 
+import creditcard.component.CCUtil;
+import framework.FinancialSystem;
+import framework.model.Account;
+import framework.model.Customer;
+import framework.model.IAccount;
+import framework.operation.Operation;
 import framework.ui.MainUI;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,16 +20,23 @@ public class CardFrm extends MainUI {
      * **
      * init variables in the object **
      */
-    String clientName, street, city, zip, state, accountType, amountDeposit, expdate, ccnumber;
+    String clientName, street, city, zip, state, accountType, amountDeposit, expdate,
+            ccnumber, email, birthdate;
+
     boolean newaccount;
     private DefaultTableModel model;
     private JTable JTable1;
     private JScrollPane JScrollPane1;
     CardFrm thisframe;
     private Object rowdata[];
+    CCUtil ccUtil;
+    FinancialSystem financialSystem;
 
     public CardFrm() {
         thisframe = this;
+
+        ccUtil = new CCUtil();
+        financialSystem = new FinancialSystem(this);
 
         setTitle("Credit-card processing Application.");
         setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
@@ -159,6 +172,11 @@ public class CardFrm extends MainUI {
         JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe);
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
+        
+        Customer customer = ccUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
+        Account account = ccUtil.getAccount(ccnumber,accountType, customer);
+        Operation operation = ccUtil.getAddAccountCommand(account);
+        financialSystem.doOperation(operation);
 
         if (newaccount) {
             // add row to table
