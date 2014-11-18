@@ -15,4 +15,6 @@ public interface ICustomer {
     public String getCustomerType();
 
     public List<IAccount> getAccounts();
+    
+    public void sendAlert(Account account);
 }

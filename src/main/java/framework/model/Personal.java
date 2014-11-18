@@ -1,6 +1,7 @@
 package framework.model;
 
 import java.util.Date;
+import java.util.Observable;
 
 /**
  *
@@ -21,5 +22,10 @@ public class Personal extends Customer implements IPersonal {
     @Override
     public String getCustomerType() {
         return "Personal";
+    }
+
+    @Override
+    public void sendAlert(Account account) {       
+        System.out.println("Alert has been sent to " + this.getEmail());
     }
 }
