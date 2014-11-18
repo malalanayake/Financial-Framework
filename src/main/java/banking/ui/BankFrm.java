@@ -36,7 +36,8 @@ public class BankFrm extends MainUI {
         myframe = this;
         bankUtil = new BankUtil();
         financialSystem = new FinancialSystem(this);
-
+        
+        rowdata = new Object[8];
         // rowdata = new Object[8];
         newaccount = false;
 
@@ -198,7 +199,7 @@ public class BankFrm extends MainUI {
 
     }
 
-    private DefaultTableModel getNewTableModel() {
+    public DefaultTableModel getNewTableModel() {
         model = new DefaultTableModel();
         model.addColumn("AccountNr");
         model.addColumn("Name");

@@ -52,7 +52,6 @@ public abstract class MainUI extends JFrame {
         jScrollPane = new JScrollPane();
         model = getNewTableModel();
         jTable = new JTable(model);
-        rowdata = new Object[8];
 
         mainPanel.add(jScrollPane);
         jScrollPane.setBounds(12, 92, 444, 160);
@@ -84,16 +83,7 @@ public abstract class MainUI extends JFrame {
         JButton_Five.addActionListener(lSymAction);
     }
 
-    private DefaultTableModel getNewTableModel() {
-        model = new DefaultTableModel();
-        model.addColumn("AccountNr");
-        model.addColumn("Name");
-        model.addColumn("City");
-        model.addColumn("P/C");
-        model.addColumn("Ch/S");
-        model.addColumn("Amount");
-        return model;
-    }
+    public abstract DefaultTableModel getNewTableModel();
 
     public abstract String getTitle();
 
