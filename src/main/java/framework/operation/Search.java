@@ -1,5 +1,6 @@
 package framework.operation;
 
+import framework.model.Account;
 import framework.model.ICustomer;
 import framework.persistence.PersistenceFacade;
 
@@ -9,11 +10,11 @@ import framework.persistence.PersistenceFacade;
  */
 public class Search<R> implements Operation {
 
-    Functor<ICustomer, R> searchFunctor;
-    Predicate<ICustomer> predicate;
+    Functor<Account, R> searchFunctor;
+    Predicate<Account> predicate;
     PersistenceFacade persistenceFacade;
 
-    public Search(Predicate<ICustomer> predicate, Functor<ICustomer, R> searchFunctor) {
+    public Search(Predicate<Account> predicate, Functor<Account, R> searchFunctor) {
         this.searchFunctor = searchFunctor;
         this.persistenceFacade = new PersistenceFacade();
         this.predicate = predicate;
@@ -21,7 +22,7 @@ public class Search<R> implements Operation {
 
     @Override
     public void execute() {
-        for (ICustomer account : this.persistenceFacade.getAllCustomers()) {
+        for (Account account : this.persistenceFacade.getAllAccounts()) {
             if (this.predicate.check(account)) {
                 searchFunctor.compute(account);
             }

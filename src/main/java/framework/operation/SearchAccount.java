@@ -1,5 +1,6 @@
 package framework.operation;
 
+import framework.model.Account;
 import framework.model.IAccount;
 import framework.model.ICustomer;
 import java.util.List;
@@ -8,20 +9,20 @@ import java.util.List;
  *
  * @author malalanayake
  */
-public class SearchAccount implements Functor<ICustomer, List<IAccount>> {
+public class SearchAccount implements Functor<Account, Account> {
 
-    List<IAccount> accounts;
+    Account account;
 
     public SearchAccount() {
-        accounts = null;
+        account = null;
     }
 
-    public void compute(ICustomer data) {
-        accounts = data.getAccounts();
+    public void compute(Account data) {
+        account = data;
     }
 
-    public List<IAccount> getValue() {
-        return accounts;
+    public Account getValue() {
+        return account;
     }
 
 }

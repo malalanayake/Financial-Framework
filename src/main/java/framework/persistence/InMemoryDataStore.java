@@ -2,8 +2,6 @@ package framework.persistence;
 
 import framework.model.Account;
 import framework.model.Customer;
-import framework.model.IAccount;
-import framework.model.ICustomer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

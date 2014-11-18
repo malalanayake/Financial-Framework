@@ -7,6 +7,9 @@ import framework.model.Customer;
 import framework.operation.Functor;
 import framework.operation.ListAccountFunctor;
 import framework.operation.Operation;
+import framework.operation.Predicate;
+import framework.operation.SearchAccount;
+import framework.operation.SearchCondition;
 import framework.operation.Transaction;
 import framework.ui.MainUI;
 import java.awt.BorderLayout;
@@ -181,7 +184,7 @@ public class BankFrm extends MainUI {
         pac.setBounds(450, 20, 300, 330);
         pac.show();
 
-        if (!accountType.equals("")) {
+        if (accountType != null && !accountType.equals("")) {
             Customer cutomer = bankUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
             Account account = bankUtil.getAccount(accountnr, accountType, cutomer);
             Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
@@ -189,7 +192,7 @@ public class BankFrm extends MainUI {
         }
 
         if (newaccount) {
-            updateTable();
+            updateTableModel();
             newaccount = false;
         }
 
@@ -206,7 +209,7 @@ public class BankFrm extends MainUI {
         pac.setBounds(450, 20, 300, 330);
         pac.show();
 
-        if (!accountType.equals("")) {
+        if (accountType != null && !accountType.equals("")) {
             Customer cutomer = bankUtil.getCompany(clientName, street, city, state, zip, numberofEmployees, email);
             Account account = bankUtil.getAccount(accountnr, accountType, cutomer);
             Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
@@ -214,7 +217,7 @@ public class BankFrm extends MainUI {
         }
 
         if (newaccount) {
-            updateTable();
+            updateTableModel();
             newaccount = false;
         }
 
@@ -231,12 +234,21 @@ public class BankFrm extends MainUI {
             dep.setBounds(430, 15, 275, 140);
             dep.show();
 
-            // compute new amount
+            Predicate<Account> predicate = new SearchCondition(accnr);
+            Functor<Account, Account> functor = new SearchAccount();
+
+            Operation operation = bankUtil.getSearchCommand(predicate, functor);
+            financialSystem.doOperation(operation);
+
+            Account account = functor.getValue();
+
             long deposit = Long.parseLong(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 5);
-            long currentamount = Long.parseLong(samount);
-            long newamount = currentamount + deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 5);
+
+            Transaction transaction = bankUtil.getAddEntryCommand(account, deposit, 'C');
+            financialSystem.doTransaction(transaction);
+
+            updateTableModel();
+
         }
 
     }
@@ -252,15 +264,20 @@ public class BankFrm extends MainUI {
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
-            // compute new amount
+            Predicate<Account> predicate = new SearchCondition(accnr);
+            Functor<Account, Account> functor = new SearchAccount();
+
+            Operation operation = bankUtil.getSearchCommand(predicate, functor);
+            financialSystem.doOperation(operation);
+
+            Account account = functor.getValue();
+
             long deposit = Long.parseLong(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 5);
-            long currentamount = Long.parseLong(samount);
-            long newamount = currentamount - deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 5);
-            if (newamount < 0) {
-                JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
-            }
+
+            Transaction transaction = bankUtil.getAddEntryCommand(account, deposit, 'D');
+            financialSystem.doTransaction(transaction);
+
+            updateTableModel();
         }
 
     }
@@ -268,10 +285,11 @@ public class BankFrm extends MainUI {
     void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event) {
         Transaction transaction = bankUtil.getAddInterestCommand();
         financialSystem.doTransaction(transaction);
+        updateTableModel();
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
     }
 
-    public void updateTable() {
+    public void updateTableModel() {
         Functor<Account, List<Account>> functor = new ListAccountFunctor();
         Operation operation = bankUtil.getListAccountCommand(functor);
         financialSystem.doOperation(operation);

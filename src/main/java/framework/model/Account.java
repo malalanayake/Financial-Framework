@@ -27,6 +27,8 @@ public abstract class Account implements IAccount {
         Date date = cal.getTime();
         Entry entry = new Entry(date, amount);
         this.entries.add(entry);
+        
+        this.amount += amount;
 
     }
 

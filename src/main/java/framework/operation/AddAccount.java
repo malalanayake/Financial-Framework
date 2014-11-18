@@ -1,8 +1,6 @@
 package framework.operation;
 
 import framework.model.Account;
-import framework.model.IAccount;
-import framework.model.IPersonal;
 import framework.persistence.PersistenceFacade;
 
 /**

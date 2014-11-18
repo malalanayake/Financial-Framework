@@ -7,10 +7,13 @@ import framework.model.Company;
 import framework.model.Customer;
 import framework.model.Personal;
 import framework.operation.AddAccount;
+import framework.operation.AddEntry;
 import framework.operation.AddInterest;
 import framework.operation.Functor;
 import framework.operation.ListAccounts;
 import framework.operation.Operation;
+import framework.operation.Predicate;
+import framework.operation.Search;
 import framework.operation.Transaction;
 import java.util.List;
 
@@ -66,6 +69,16 @@ public class BankUtil {
     
      public Operation getListAccountCommand(Functor<Account, List<Account>> functor) {
         Operation operation = new ListAccounts(functor);
+        return operation;
+    }
+     
+    public Transaction getAddEntryCommand(Account account, double amount, char flag) {
+        Transaction transaction = new AddEntry(account, amount, flag);
+        return transaction;
+    }
+    
+    public Operation getSearchCommand(Predicate<Account> predicate, Functor<Account, Account> functor) {
+        Operation operation = new Search(predicate, functor);
         return operation;
     }
 }

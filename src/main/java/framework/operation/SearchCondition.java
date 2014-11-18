@@ -1,23 +1,22 @@
 package framework.operation;
 
-import framework.model.Customer;
-import framework.model.ICustomer;
+import framework.model.Account;
 
 /**
  *
  * @author malalanayake
  */
-public class SearchCondition implements Predicate<Customer> {
+public class SearchCondition implements Predicate<Account> {
 
-    private String name;
+    private String accountNo;
 
-    public SearchCondition(String name) {
-        this.name = name;
+    public SearchCondition(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     @Override
-    public boolean check(Customer data) {
-         return data.getName().equals(name);
+    public boolean check(Account data) {
+         return data.getAccountNo().equals(accountNo);
     }
 
 }

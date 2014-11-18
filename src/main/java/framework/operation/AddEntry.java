@@ -1,5 +1,6 @@
 package framework.operation;
 
+import framework.model.Account;
 import framework.model.IAccount;
 
 /**
@@ -8,12 +9,16 @@ import framework.model.IAccount;
  */
 public class AddEntry implements Transaction {
 
-    IAccount account;
+    Account account;
     double amount;
     
-    public AddEntry(IAccount account, double amount) {
+    public AddEntry(Account account, double amount, char flag) {
         this.account = account;
-        this.amount = amount;
+        if(flag == 'D')
+            this.amount = -amount;
+        else
+            this.amount = amount;
+        
     }
 
     public void execute() {
