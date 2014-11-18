@@ -5,6 +5,8 @@ import framework.FinancialSystem;
 import framework.model.Account;
 import framework.model.Customer;
 import framework.model.IAccount;
+import framework.operation.Functor;
+import framework.operation.ListAccountFunctor;
 import framework.operation.Operation;
 import framework.ui.MainUI;
 import java.awt.*;
@@ -172,28 +174,21 @@ public class CardFrm extends MainUI {
         JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe);
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
-        
+
         Customer customer = ccUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
-        Account account = ccUtil.getAccount(ccnumber,accountType, customer);
+        Account account = ccUtil.getAccount(ccnumber, accountType, customer);
         Operation operation = ccUtil.getAddAccountCommand(account);
         financialSystem.doOperation(operation);
 
         if (newaccount) {
-            // add row to table
-            rowdata[0] = clientName;
-            rowdata[1] = ccnumber;
-            rowdata[2] = expdate;
-            rowdata[3] = accountType;
-            rowdata[4] = "0";
-            model.addRow(rowdata);
-            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+            updateTable();
             newaccount = false;
         }
 
     }
 
     void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {
-        JDialogGenBill billFrm = new JDialogGenBill();
+        JDialogGenBill billFrm = new JDialogGenBill(this);
         billFrm.setBounds(450, 20, 400, 350);
         billFrm.show();
 
@@ -242,6 +237,38 @@ public class CardFrm extends MainUI {
             }
         }
 
+    }
+
+    public void updateTable() {
+        Functor<Account, java.util.List<Account>> functor = new ListAccountFunctor();
+        Operation operation = ccUtil.getListAccountCommand(functor);
+        financialSystem.doOperation(operation);
+
+        model = getNewTableModel();
+
+        for (Account account : functor.getValue()) {
+            // add row to table
+            rowdata[0] = account.getAccountNo();
+            rowdata[1] = account.getCustomer().getName();
+            rowdata[2] = "";
+            rowdata[3] = account.getAccountType();
+            rowdata[4] = account.getAmount();
+            model.addRow(rowdata);
+            JTable1.setModel(model);
+            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+            newaccount = false;
+        }
+
+    }
+
+    private DefaultTableModel getNewTableModel() {
+        model = new DefaultTableModel();
+        model.addColumn("AccountNr");
+        model.addColumn("Name");
+        model.addColumn("Exp");
+        model.addColumn("Type");
+        model.addColumn("Amount");
+        return model;
     }
 
 }

@@ -1,16 +1,27 @@
 package framework.report;
 
-import framework.model.IAccount;
+import framework.model.Account;
+import framework.operation.Functor;
 
 /**
  *
  * @author malalanayake
  */
-public class MonthlyReport implements ReportGenerator {
+public class MonthlyReport implements Functor<Account, String> {
+
+    String output = "";
+
+    public MonthlyReport() {
+    }
 
     @Override
-    public void generateReport(IAccount account, String output) {
-        output += "\nAccount Type:" + account.getAccountType();
+    public void compute(Account data) {
+        output = output + data.getAccountNo();
+    }
+
+    @Override
+    public String getValue() {
+        return output;
     }
 
 }
