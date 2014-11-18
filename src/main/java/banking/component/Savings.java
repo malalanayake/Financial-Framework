@@ -25,4 +25,10 @@ public class Savings extends Account {
         return type;
     }
 
+    @Override
+    public String getReportOutPut() {
+        return "Type :" + this.getAccountNo()
+                + "\n\n Balance :" + this.getAmount();
+    }
+
 }

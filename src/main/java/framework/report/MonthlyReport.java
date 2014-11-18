@@ -9,19 +9,23 @@ import framework.operation.Functor;
  */
 public class MonthlyReport implements Functor<Account, String> {
 
-    String output = "";
+    StringBuilder output = new StringBuilder();
 
     public MonthlyReport() {
     }
 
     @Override
     public void compute(Account data) {
-        output = output + data.getAccountNo();
+        String newLine = System.lineSeparator();
+
+        output.append(data.getReportOutPut());
+        output.append(newLine);
+
     }
 
     @Override
     public String getValue() {
-        return output;
+        return output.toString();
     }
 
 }

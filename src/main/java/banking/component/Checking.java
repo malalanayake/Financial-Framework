@@ -7,7 +7,8 @@ import framework.model.Customer;
  *
  * @author malalanayake
  */
-public class Checking extends Account{
+public class Checking extends Account {
+
     private String type = "Checking";
 
     public Checking(String accountNr, Customer customer) {
@@ -22,6 +23,12 @@ public class Checking extends Account{
     @Override
     public String getAccountType() {
         return this.type;
+    }
+
+    @Override
+    public String getReportOutPut() {
+        return "Type :" + this.getAccountNo()
+                + "\n\n Balance :" + this.getAmount();
     }
 
 }

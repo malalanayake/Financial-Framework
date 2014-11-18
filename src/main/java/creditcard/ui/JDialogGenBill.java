@@ -33,8 +33,8 @@ public class JDialogGenBill extends javax.swing.JDialog {
         setVisible(false);
         getContentPane().add(JScrollPane1);
         JScrollPane1.setBounds(24, 24, 358, 240);
-        JScrollPane1.getViewport().add(JTextField1);
-        JTextField1.setBounds(0, 0, 355, 237);
+        JScrollPane1.getViewport().add(JTextArea1);
+        JTextArea1.setBounds(0, 0, 355, 237);
         JButton_OK.setText("OK");
         JButton_OK.setActionCommand("OK");
         getContentPane().add(JButton_OK);
@@ -44,7 +44,8 @@ public class JDialogGenBill extends javax.swing.JDialog {
         Operation operation = cardFrm.ccUtil.getGenerateReportCommand(monthlyReport);
         cardFrm.financialSystem.doOperation(operation);
 
-        JTextField1.setText(monthlyReport.getValue());
+        System.out.println(monthlyReport.getValue());
+        JTextArea1.setText(monthlyReport.getValue());
 		//}}
 
         //{{REGISTER_LISTENERS
@@ -55,7 +56,7 @@ public class JDialogGenBill extends javax.swing.JDialog {
 
     //{{DECLARE_CONTROLS
     javax.swing.JScrollPane JScrollPane1 = new javax.swing.JScrollPane();
-    javax.swing.JTextField JTextField1 = new javax.swing.JTextField();
+    javax.swing.JTextArea JTextArea1 = new javax.swing.JTextArea();
     javax.swing.JButton JButton_OK = new javax.swing.JButton();
     //}}
 

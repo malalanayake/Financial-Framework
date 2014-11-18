@@ -3,7 +3,6 @@ package creditcard.ui;
 /*
  A basic implementation of the JDialog class.
  */
-
 public class JDialog_AddCCAccount extends javax.swing.JDialog {
 
     private CardFrm parentframe;
@@ -199,6 +198,7 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
 
     void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event) {
         //make this frame invisible if Cancel button is clicked
+        parentframe.newaccount = false;
         dispose();
     }
 }

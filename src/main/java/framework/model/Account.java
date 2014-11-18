@@ -27,7 +27,7 @@ public abstract class Account implements IAccount {
         Date date = cal.getTime();
         Entry entry = new Entry(date, amount);
         this.entries.add(entry);
-        
+
         this.amount += amount;
 
     }
@@ -38,6 +38,55 @@ public abstract class Account implements IAccount {
         this.amount = this.amount + interest;
     }
 
+    public double getPreviousBalance() {
+        double balance = 0;
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        int month = date.getMonth() - 1;
+
+        for (Entry entry : this.entries) {
+            if (entry.getDate().getMonth() == month) {
+                balance = balance + entry.getAmount();
+            }
+        }
+
+        return balance;
+    }
+
+    public double getTotalDebitForThisMonth() {
+        double charge = 0;
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        int month = date.getMonth();
+
+        for (Entry entry : this.entries) {
+            if (entry.getDate().getMonth() == month) {
+                if (entry.getAmount() < 0) {
+                    charge = charge + entry.getAmount();
+                }
+            }
+        }
+
+        return charge;
+    }
+
+    public double getTotalCreditForThisMonth() {
+        double charge = 0;
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        int month = date.getMonth();
+
+        for (Entry entry : this.entries) {
+            if (entry.getDate().getMonth() == month) {
+                if (entry.getAmount() > 0) {
+                    charge = charge + entry.getAmount();
+                }
+            }
+        }
+
+        return charge;
+    }
+
     @Override
     public void notifyToCustomer() {
 
@@ -46,6 +95,8 @@ public abstract class Account implements IAccount {
     public abstract double getInterestRate();
 
     public abstract String getAccountType();
+    
+    public abstract String getReportOutPut();
 
     public Customer getCustomer() {
         return customer;
@@ -70,6 +121,5 @@ public abstract class Account implements IAccount {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
-    
+
 }

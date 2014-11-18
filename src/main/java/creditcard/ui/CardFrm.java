@@ -175,12 +175,11 @@ public class CardFrm extends MainUI {
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
 
-        Customer customer = ccUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
-        Account account = ccUtil.getAccount(ccnumber, accountType, customer);
-        Operation operation = ccUtil.getAddAccountCommand(account);
-        financialSystem.doOperation(operation);
-
         if (newaccount) {
+            Customer customer = ccUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
+            Account account = ccUtil.getAccount(ccnumber, accountType, customer);
+            Operation operation = ccUtil.getAddAccountCommand(account);
+            financialSystem.doOperation(operation);
             updateTable();
             newaccount = false;
         }
