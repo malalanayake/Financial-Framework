@@ -12,7 +12,7 @@ public interface ICustomer {
 
     public void removeAccount(IAccount account);
 
-    public String customerType();
+    public String getCustomerType();
 
     public List<IAccount> getAccounts();
 }

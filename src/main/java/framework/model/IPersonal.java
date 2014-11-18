@@ -7,5 +7,5 @@ package framework.model;
 public interface IPersonal {
     public void addAccount(IAccount account);
     public void removeAccount(IAccount account);
-    public String customerType();
+    public String getCustomerType();
 }

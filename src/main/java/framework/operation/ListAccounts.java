@@ -1,6 +1,6 @@
 package framework.operation;
 
-import framework.model.IAccount;
+import framework.model.Account;
 import framework.persistence.PersistenceFacade;
 import java.util.List;
 
@@ -10,17 +10,19 @@ import java.util.List;
  */
 public class ListAccounts implements Operation {
 
-    List<IAccount> accounts;
+    Functor<Account, List<Account>> functor;
     PersistenceFacade persistenceFacade;
 
-    public ListAccounts(List<IAccount> accounts) {
-        this.accounts = accounts;
+    public ListAccounts(Functor<Account, List<Account>> functor) {
+        this.functor = functor;                
         this.persistenceFacade = new PersistenceFacade();
     }
 
     @Override
     public void execute() {
-        accounts = this.persistenceFacade.getAllAccounts();
+        for (Account account : this.persistenceFacade.getAllAccounts()) {
+            functor.compute(account);
+        }
     }
 
 }

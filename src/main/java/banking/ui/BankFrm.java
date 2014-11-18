@@ -2,11 +2,18 @@ package banking.ui;
 
 import banking.component.BankUtil;
 import framework.FinancialSystem;
+import framework.model.Account;
 import framework.model.Customer;
 import framework.model.IAccount;
+import framework.operation.AddInterest;
+import framework.operation.Functor;
+import framework.operation.ListAccountFunctor;
 import framework.operation.Operation;
+import framework.operation.Transaction;
 import framework.ui.MainUI;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -185,21 +192,13 @@ public class BankFrm extends MainUI {
 
         if (!accountType.equals("")) {
             Customer cutomer = bankUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
-            IAccount account = bankUtil.getAccount(accountType, cutomer);
+            Account account = bankUtil.getAccount(accountType, cutomer);
             Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
             financialSystem.doOperation(operationAddAccount);
         }
 
         if (newaccount) {
-            // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "P";
-            rowdata[4] = accountType;
-            rowdata[5] = "0";
-            model.addRow(rowdata);
-            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+            updateTable();
             newaccount = false;
         }
 
@@ -218,21 +217,13 @@ public class BankFrm extends MainUI {
 
         if (!accountType.equals("")) {
             Customer cutomer = bankUtil.getCompany(clientName, street, city, state, zip, numberofEmployees, email);
-            IAccount account = bankUtil.getAccount(accountType, cutomer);
+            Account account = bankUtil.getAccount(accountType, cutomer);
             Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
             financialSystem.doOperation(operationAddAccount);
         }
 
         if (newaccount) {
-            // add row to table
-            rowdata[0] = accountnr;
-            rowdata[1] = clientName;
-            rowdata[2] = city;
-            rowdata[3] = "C";
-            rowdata[4] = accountType;
-            rowdata[5] = "0";
-            model.addRow(rowdata);
-            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+            updateTable();
             newaccount = false;
         }
 
@@ -284,7 +275,37 @@ public class BankFrm extends MainUI {
     }
 
     void JButtonAddinterest_actionPerformed(java.awt.event.ActionEvent event) {
+        Transaction transaction = bankUtil.getAddInterestCommand();
+        financialSystem.doTransaction(transaction);
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public void updateTable() {
+        Functor<Account, List<Account>> functor = new ListAccountFunctor();
+        Operation operation = bankUtil.getListAccountCommand(functor);
+        financialSystem.doOperation(operation);
+        
+        model = new DefaultTableModel();
+        model.addColumn("AccountNr");
+        model.addColumn("Name");
+        model.addColumn("City");
+        model.addColumn("P/C");
+        model.addColumn("Ch/S");
+        model.addColumn("Amount");
+        
+        for (Account account : functor.getValue()) {
+            // add row to table
+            rowdata[0] = account.getAccountNo();
+            rowdata[1] = account.getCustomer().getName();
+            rowdata[2] = account.getCustomer().getAddress().getCity();
+            rowdata[3] = account.getCustomer().getCustomerType();
+            rowdata[4] = account.getAccountType();
+            rowdata[5] = account.getAmount();
+            model.addRow(rowdata);
+            JTable1.setModel(model);
+            JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
+            newaccount = false;
+        }
 
     }
 }

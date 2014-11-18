@@ -6,7 +6,8 @@
 
 package framework.persistence;
 
-import framework.model.IAccount;
+import framework.model.Account;
+import framework.model.Customer;
 import framework.model.ICustomer;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Amila
  */
 public interface DataStore {
-     public List<ICustomer> getAllCustomer();
-     public List<IAccount> getAllAccount();
-     public void createAccount(IAccount account);
+     public List<Customer> getAllCustomer();
+     public List<Account> getAllAccount();
+     public void createAccount(Account account);
 }

@@ -19,7 +19,7 @@ public class Personal extends Customer implements IPersonal {
     }
 
     @Override
-    public String customerType() {
+    public String getCustomerType() {
         return "Personal";
     }
 }

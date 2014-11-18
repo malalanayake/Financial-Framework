@@ -1,5 +1,7 @@
 package framework.persistence;
 
+import framework.model.Account;
+import framework.model.Customer;
 import framework.model.IAccount;
 import framework.model.ICustomer;
 import java.util.List;
@@ -20,15 +22,15 @@ public class PersistenceFacade {
         this.dataStore = dataStore;
     }
 
-    public List<IAccount> getAllAccounts() {
+    public List<Account> getAllAccounts() {
         return dataStore.getAllAccount();
     }
 
-    public List<ICustomer> getAllCustomers() {
+    public List<Customer> getAllCustomers() {
         return dataStore.getAllCustomer();
     }
 
-    public void addAccount(IAccount account) {
+    public void addAccount(Account account) {
         dataStore.createAccount(account);
     }
 }

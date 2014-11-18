@@ -62,6 +62,6 @@ public abstract class Customer implements ICustomer {
         accounts.remove(account);
     }
 
-    public abstract String customerType();
+    public abstract String getCustomerType();
     
 }

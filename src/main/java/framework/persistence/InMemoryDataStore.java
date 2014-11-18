@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class InMemoryDataStore implements DataStore {
 
-    HashMap<ICustomer, List<IAccount>> dataStorage;
+    HashMap<Customer, List<Account>> dataStorage;
     static InMemoryDataStore inMemoryDataStore = null;
 
     private InMemoryDataStore() {
@@ -22,29 +22,35 @@ public class InMemoryDataStore implements DataStore {
     }
 
     public static InMemoryDataStore getInstance() {
-        if (inMemoryDataStore != null) {
+        if (inMemoryDataStore == null) {
             inMemoryDataStore = new InMemoryDataStore();
         }
         return inMemoryDataStore;
     }
 
     @Override
-    public List<ICustomer> getAllCustomer() {
+    public List<Customer> getAllCustomer() {
         return new ArrayList(dataStorage.keySet());
     }
 
     @Override
-    public List<IAccount> getAllAccount() {
-        return new ArrayList(dataStorage.values());
+    public List<Account> getAllAccount() {
+        List<Account> allAccounts = new ArrayList<>();
+        for (List<Account> list : dataStorage.values()) {
+            for (Account account : list) {
+                allAccounts.add(account);
+            }
+        }
+        return allAccounts;
     }
 
     @Override
-    public void createAccount(IAccount account) {
-        ICustomer iCustomer = account.getCustomer();
+    public void createAccount(Account account) {
+        Customer iCustomer = account.getCustomer();
         if (dataStorage.get(iCustomer) != null) {
             dataStorage.get(iCustomer).add(account);
         } else {
-            List<IAccount> iAccounts = new ArrayList<>();
+            List<Account> iAccounts = new ArrayList<>();
             iAccounts.add(account);
             dataStorage.put(iCustomer, iAccounts);
         }

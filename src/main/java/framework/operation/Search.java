@@ -1,9 +1,7 @@
 package framework.operation;
 
-import framework.model.IAccount;
 import framework.model.ICustomer;
 import framework.persistence.PersistenceFacade;
-import java.util.List;
 
 /**
  *
@@ -21,6 +19,7 @@ public class Search<R> implements Operation {
         this.predicate = predicate;
     }
 
+    @Override
     public void execute() {
         for (ICustomer account : this.persistenceFacade.getAllCustomers()) {
             if (this.predicate.check(account)) {

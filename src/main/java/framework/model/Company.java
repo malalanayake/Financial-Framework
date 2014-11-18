@@ -17,7 +17,7 @@ public class Company extends Customer implements IOrganizational {
     }
 
     @Override
-    public String customerType() {
+    public String getCustomerType() {
         return "Company";
     }
 }

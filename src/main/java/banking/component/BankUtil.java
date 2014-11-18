@@ -2,12 +2,17 @@ package banking.component;
 
 import banking.factory.AccountFactory;
 import framework.factory.CustomerFactory;
+import framework.model.Account;
 import framework.model.Company;
 import framework.model.Customer;
-import framework.model.IAccount;
 import framework.model.Personal;
 import framework.operation.AddAccount;
+import framework.operation.AddInterest;
+import framework.operation.Functor;
+import framework.operation.ListAccounts;
 import framework.operation.Operation;
+import framework.operation.Transaction;
+import java.util.List;
 
 /**
  *
@@ -44,13 +49,23 @@ public class BankUtil {
         return company;
     }
 
-    public IAccount getAccount(String accountType, Customer customer) {
-        IAccount account = AccountFactory.getInstance(customer, accountType);
+    public Account getAccount(String accountType, Customer customer) {
+        Account account = AccountFactory.getInstance(customer, accountType);
         return account;
     }
 
-    public Operation getAddAccountCommand(IAccount account) {
+    public Operation getAddAccountCommand(Account account) {
         Operation operation = new AddAccount(account);
+        return operation;
+    }
+    
+    public Transaction getAddInterestCommand() {
+        Transaction transaction = new AddInterest();
+        return transaction;
+    }
+    
+     public Operation getListAccountCommand(Functor<Account, List<Account>> functor) {
+        Operation operation = new ListAccounts(functor);
         return operation;
     }
 }

@@ -1,6 +1,7 @@
 package banking.component;
 
 import framework.model.Account;
+import framework.model.Customer;
 import framework.model.ICustomer;
 
 /**
@@ -10,7 +11,7 @@ import framework.model.ICustomer;
 public class Checking extends Account{
     private String type = "Checking";
 
-    public Checking(ICustomer customer) {
+    public Checking(Customer customer) {
         super(customer);
     }
 

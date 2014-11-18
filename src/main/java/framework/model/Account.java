@@ -11,12 +11,12 @@ import java.util.List;
  */
 public abstract class Account implements IAccount {
 
-    private ICustomer customer;
+    private Customer customer;
     private String accountNo;
     private double amount;
     private List<Entry> entries;
 
-    public Account(ICustomer customer) {
+    public Account(Customer customer) {
         this.customer = customer;
         this.entries = new ArrayList<>();
     }
@@ -44,11 +44,11 @@ public abstract class Account implements IAccount {
 
     public abstract String getAccountType();
 
-    public ICustomer getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(ICustomer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
@@ -60,4 +60,13 @@ public abstract class Account implements IAccount {
         this.accountNo = accountNo;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    
+    
 }
