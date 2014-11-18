@@ -7,6 +7,10 @@ import framework.model.Customer;
 import framework.operation.Functor;
 import framework.operation.ListAccountFunctor;
 import framework.operation.Operation;
+import framework.operation.Predicate;
+import framework.operation.SearchAccount;
+import framework.operation.SearchCondition;
+import framework.operation.Transaction;
 import framework.ui.MainUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -135,12 +139,20 @@ public class CardFrm extends MainUI {
             dep.setBounds(430, 15, 275, 140);
             dep.show();
 
-            // compute new amount
+            Predicate<Account> predicate = new SearchCondition(name);
+            Functor<Account, Account> functor = new SearchAccount();
+
+            Operation operation = ccUtil.getSearchCommand(predicate, functor);
+            financialSystem.doOperation(operation);
+
+            Account account = functor.getValue();
+
             long deposit = Long.parseLong(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 4);
-            long currentamount = Long.parseLong(samount);
-            long newamount = currentamount + deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 4);
+
+            Transaction transaction = ccUtil.getAddEntryCommand(account, deposit, 'C');
+            financialSystem.doTransaction(transaction);
+
+            updateTable();
         }
     }
 
@@ -156,15 +168,20 @@ public class CardFrm extends MainUI {
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
-            // compute new amount
+            Predicate<Account> predicate = new SearchCondition(name);
+            Functor<Account, Account> functor = new SearchAccount();
+
+            Operation operation = ccUtil.getSearchCommand(predicate, functor);
+            financialSystem.doOperation(operation);
+
+            Account account = functor.getValue();
+
             long deposit = Long.parseLong(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 4);
-            long currentamount = Long.parseLong(samount);
-            long newamount = currentamount - deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 4);
-            if (newamount < 0) {
-                JOptionPane.showMessageDialog(JButton_Four, " " + name + " Your balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
-            }
+
+            Transaction transaction = ccUtil.getAddEntryCommand(account, deposit, 'D');
+            financialSystem.doTransaction(transaction);
+
+            updateTable();
         }
     }
 
