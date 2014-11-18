@@ -8,13 +8,13 @@ import java.util.Date;
  */
 public class Personal extends Customer implements IPersonal {
 
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

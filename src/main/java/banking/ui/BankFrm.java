@@ -21,7 +21,8 @@ public class BankFrm extends MainUI {
      * **
      * init variables in the object **
      */
-    String accountnr, clientName, street, city, zip, state, accountType, clientType, amountDeposit, email;
+    String accountnr, clientName, street, city, zip, state, accountType, clientType,
+            amountDeposit, email, birthdate, numberofEmployees;
     boolean newaccount;
     private DefaultTableModel model;
     private JTable JTable1;
@@ -183,12 +184,12 @@ public class BankFrm extends MainUI {
         pac.show();
 
         if (!accountType.equals("")) {
-            Customer cutomer = bankUtil.getCustomer("PERSONAL", clientName, street, city, state, zip);
+            Customer cutomer = bankUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
             IAccount account = bankUtil.getAccount(accountType, cutomer);
-            Operation operation = bankUtil.getAddAccountCommand(account);
-            financialSystem.doOperation(operation);
+            Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
+            financialSystem.doOperation(operationAddAccount);
         }
-        
+
         if (newaccount) {
             // add row to table
             rowdata[0] = accountnr;
@@ -214,6 +215,13 @@ public class BankFrm extends MainUI {
         JDialog_AddCompAcc pac = new JDialog_AddCompAcc(myframe);
         pac.setBounds(450, 20, 300, 330);
         pac.show();
+
+        if (!accountType.equals("")) {
+            Customer cutomer = bankUtil.getCompany(clientName, street, city, state, zip, numberofEmployees, email);
+            IAccount account = bankUtil.getAccount(accountType, cutomer);
+            Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
+            financialSystem.doOperation(operationAddAccount);
+        }
 
         if (newaccount) {
             // add row to table

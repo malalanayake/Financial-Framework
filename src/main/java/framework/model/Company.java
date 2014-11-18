@@ -5,13 +5,14 @@ package framework.model;
  * @author malalanayake
  */
 public class Company extends Customer implements IOrganizational {
-    private int noOfEmployees;
-    
-      public int getNoOfEmployees() {
+
+    private String noOfEmployees;
+
+    public String getNoOfEmployees() {
         return noOfEmployees;
     }
 
-    public void setNoOfEmployees(int noOfEmployees) {
+    public void setNoOfEmployees(String noOfEmployees) {
         this.noOfEmployees = noOfEmployees;
     }
 

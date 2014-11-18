@@ -63,5 +63,5 @@ public abstract class Customer implements ICustomer {
     }
 
     public abstract String customerType();
-
+    
 }
