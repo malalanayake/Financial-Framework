@@ -49,8 +49,8 @@ public class BankUtil {
         return company;
     }
 
-    public Account getAccount(String accountType, Customer customer) {
-        Account account = AccountFactory.getInstance(customer, accountType);
+    public Account getAccount(String accountNr, String accountType, Customer customer) {
+        Account account = AccountFactory.getInstance(accountNr, customer, accountType);
         return account;
     }
 

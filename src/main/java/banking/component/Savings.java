@@ -2,7 +2,6 @@ package banking.component;
 
 import framework.model.Account;
 import framework.model.Customer;
-import framework.model.ICustomer;
 
 /**
  *
@@ -12,8 +11,8 @@ public class Savings extends Account {
 
     private String type = "Savings";
 
-    public Savings(Customer customer) {
-        super(customer);
+    public Savings(String accountNr, Customer customer) {
+        super(accountNr, customer);
     }
 
     @Override

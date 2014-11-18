@@ -16,7 +16,8 @@ public abstract class Account implements IAccount {
     private double amount;
     private List<Entry> entries;
 
-    public Account(Customer customer) {
+    public Account(String accountNo, Customer customer) {
+        this.accountNo = accountNo;
         this.customer = customer;
         this.entries = new ArrayList<>();
     }

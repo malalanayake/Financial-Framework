@@ -4,8 +4,6 @@ import banking.component.Checking;
 import banking.component.Savings;
 import framework.model.Account;
 import framework.model.Customer;
-import framework.model.IAccount;
-import framework.model.ICustomer;
 
 /**
  *
@@ -13,12 +11,12 @@ import framework.model.ICustomer;
  */
 public class AccountFactory {
 
-    public static Account getInstance(Customer customer, String type) {
+    public static Account getInstance(String accountNr, Customer customer, String type) {
         switch (type) {
             case "CHECKING":
-                return new Checking(customer);
+                return new Checking(accountNr, customer);
             case "SAVING":
-                return new Savings(customer);
+                return new Savings(accountNr, customer);
             default:
                 return null;
         }
