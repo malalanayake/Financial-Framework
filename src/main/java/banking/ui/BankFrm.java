@@ -1,5 +1,10 @@
 package banking.ui;
 
+import banking.component.BankUtil;
+import framework.FinancialSystem;
+import framework.model.Customer;
+import framework.model.IAccount;
+import framework.operation.Operation;
 import framework.ui.MainUI;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
@@ -16,16 +21,20 @@ public class BankFrm extends MainUI {
      * **
      * init variables in the object **
      */
-    String accountnr, clientName, street, city, zip, state, accountType, clientType, amountDeposit;
+    String accountnr, clientName, street, city, zip, state, accountType, clientType, amountDeposit, email;
     boolean newaccount;
     private DefaultTableModel model;
     private JTable JTable1;
     private JScrollPane JScrollPane1;
     BankFrm myframe;
     private Object rowdata[];
+    BankUtil bankUtil;
+    FinancialSystem financialSystem;
 
     public BankFrm() {
         myframe = this;
+        bankUtil = new BankUtil();
+        financialSystem = new FinancialSystem(this);
 
         setTitle("Bank Application.");
         setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
@@ -173,6 +182,13 @@ public class BankFrm extends MainUI {
         pac.setBounds(450, 20, 300, 330);
         pac.show();
 
+        if (!accountType.equals("")) {
+            Customer cutomer = bankUtil.getCustomer("PERSONAL", clientName, street, city, state, zip);
+            IAccount account = bankUtil.getAccount(accountType, cutomer);
+            Operation operation = bankUtil.getAddAccountCommand(account);
+            financialSystem.doOperation(operation);
+        }
+        
         if (newaccount) {
             // add row to table
             rowdata[0] = accountnr;

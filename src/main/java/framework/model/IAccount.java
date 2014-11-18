@@ -8,11 +8,11 @@ public interface IAccount {
 
     public void addEntry(double amount);
 
-    public void getAccountType();
+    public String getAccountType();
 
     public void addInterest();
 
-    public int getInterestRate();
+    public double getInterestRate();
 
     public void notifyToCustomer();
 

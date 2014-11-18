@@ -12,9 +12,21 @@ import java.util.List;
  *
  * @author malalanayake
  */
-public class InMemoryDataStore implements DataStore{
+public class InMemoryDataStore implements DataStore {
 
-    HashMap<ICustomer, List<IAccount>> dataStorage = new HashMap();
+    HashMap<ICustomer, List<IAccount>> dataStorage;
+    static InMemoryDataStore inMemoryDataStore = null;
+
+    private InMemoryDataStore() {
+        dataStorage = new HashMap();
+    }
+
+    public static InMemoryDataStore getInstance() {
+        if (inMemoryDataStore != null) {
+            inMemoryDataStore = new InMemoryDataStore();
+        }
+        return inMemoryDataStore;
+    }
 
     @Override
     public List<ICustomer> getAllCustomer() {
@@ -29,10 +41,9 @@ public class InMemoryDataStore implements DataStore{
     @Override
     public void createAccount(IAccount account) {
         ICustomer iCustomer = account.getCustomer();
-        if(dataStorage.get(iCustomer) != null){
+        if (dataStorage.get(iCustomer) != null) {
             dataStorage.get(iCustomer).add(account);
-        }
-        else{
+        } else {
             List<IAccount> iAccounts = new ArrayList<>();
             iAccounts.add(account);
             dataStorage.put(iCustomer, iAccounts);

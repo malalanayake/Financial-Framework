@@ -2,6 +2,7 @@ package framework.operation;
 
 import framework.model.IAccount;
 import framework.model.IPersonal;
+import framework.persistence.PersistenceFacade;
 
 /**
  *
@@ -9,11 +10,15 @@ import framework.model.IPersonal;
  */
 public class AddAccount implements Operation {
 
-    public AddAccount(IPersonal person, IAccount account) {
+    PersistenceFacade persistenceFacade;
+    IAccount account;
+
+    public AddAccount(IAccount account) {
+        persistenceFacade = new PersistenceFacade();
     }
 
     public void execute() {
-
+        persistenceFacade.addAccount(account);
     }
 
 }

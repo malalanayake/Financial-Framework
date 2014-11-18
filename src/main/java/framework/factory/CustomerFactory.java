@@ -1,6 +1,8 @@
 package framework.factory;
 
+import framework.model.Company;
 import framework.model.Customer;
+import framework.model.Personal;
 
 /**
  *
@@ -8,7 +10,14 @@ import framework.model.Customer;
  */
 public class CustomerFactory {
 
-    public Customer getInstance(String type) {
-        return null;
+    public static Customer getInstance(String type) {
+        switch (type) {
+            case "PERSONAL":
+                return new Personal();
+            case "COMPANY":
+                return new Company();
+            default:
+                return null;
+        }
     }
 }

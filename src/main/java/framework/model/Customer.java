@@ -8,11 +8,17 @@ import java.util.List;
  * @author malalanayake
  */
 public abstract class Customer implements ICustomer {
+
     private String name;
     private String email;
     private Address address;
-    
-    private List<IAccount> accounts = new ArrayList<>();;
+
+    private List<IAccount> accounts;
+
+    public Customer() {
+        this.address = new Address();
+        this.accounts = new ArrayList<>();
+    }
 
     public List<IAccount> getAccounts() {
         return accounts;
@@ -45,18 +51,17 @@ public abstract class Customer implements ICustomer {
     public void setAddress(Address address) {
         this.address = address;
     }
-    
+
     @Override
     public void addAccount(IAccount account) {
         accounts.add(account);
     }
-    
+
     @Override
     public void removeAccount(IAccount account) {
         accounts.remove(account);
     }
-    
+
     public abstract String customerType();
-    
-    
+
 }

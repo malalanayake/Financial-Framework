@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PersistenceFacade {
 
-    DataStore dataStore = new InMemoryDataStore();
+    DataStore dataStore = InMemoryDataStore.getInstance();
 
     public DataStore getDataStore() {
         return dataStore;
@@ -26,5 +26,9 @@ public class PersistenceFacade {
 
     public List<ICustomer> getAllCustomers() {
         return dataStore.getAllCustomer();
+    }
+
+    public void addAccount(IAccount account) {
+        dataStore.createAccount(account);
     }
 }

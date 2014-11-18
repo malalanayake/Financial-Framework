@@ -30,7 +30,7 @@ public abstract class Account implements IAccount {
     }
 
     public void addInterest() {
-        int rate = this.getInterestRate();
+        double rate = this.getInterestRate();
         double interest = this.amount * rate;
         this.amount = this.amount + interest;
     }
@@ -40,9 +40,9 @@ public abstract class Account implements IAccount {
 
     }
 
-    public abstract int getInterestRate();
+    public abstract double getInterestRate();
 
-    public abstract void getAccountType();
+    public abstract String getAccountType();
 
     public ICustomer getCustomer() {
         return customer;
