@@ -14,13 +14,15 @@ import framework.operation.Transaction;
 import framework.ui.MainUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
 /**
  * A basic JFC based application.
  */
-public class CardFrm extends MainUI {
+public class CardFrm extends MainUI implements Observer {
 
     /**
      * **
@@ -31,14 +33,12 @@ public class CardFrm extends MainUI {
 
     boolean newaccount;
     CardFrm thisframe;
-    CCUtil ccUtil;
-    FinancialSystem financialSystem;
-
+    CreditCardUIController uiController;
+    
     public CardFrm() {
         thisframe = this;
 
-        ccUtil = new CCUtil();
-        financialSystem = new FinancialSystem(this);
+        uiController = new CreditCardUIController(this);
         
         
         
@@ -111,11 +111,8 @@ public class CardFrm extends MainUI {
         ccac.show();
 
         if (newaccount) {
-            Customer customer = ccUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
-            Account account = ccUtil.getAccount(ccnumber, accountType, customer, expdate);
-            Operation operation = ccUtil.getAddAccountCommand(account);
-            financialSystem.doOperation(operation);
-            updateTable();
+            uiController.addCreditCardAccount(ccnumber, accountType, expdate, 
+                    clientName, street, city, state, zip, birthdate, email);
             newaccount = false;
         }
     }
@@ -127,6 +124,7 @@ public class CardFrm extends MainUI {
         billFrm.show();
     }
 
+    // Deposit
     @Override
     public void JButtonThree_actionPerformed(ActionEvent event) {
         // get selected name
@@ -139,20 +137,7 @@ public class CardFrm extends MainUI {
             dep.setBounds(430, 15, 275, 140);
             dep.show();
 
-            Predicate<Account> predicate = new SearchCondition(name);
-            Functor<Account, Account> functor = new SearchAccount();
-
-            Operation operation = ccUtil.getSearchCommand(predicate, functor);
-            financialSystem.doOperation(operation);
-
-            Account account = functor.getValue();
-
-            long deposit = Long.parseLong(amountDeposit);
-
-            Transaction transaction = ccUtil.getAddEntryCommand(account, deposit, 'C');
-            financialSystem.doTransaction(transaction);
-
-            updateTable();
+            uiController.transaction(name, amountDeposit, 'C');
         }
     }
 
@@ -168,20 +153,7 @@ public class CardFrm extends MainUI {
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
-            Predicate<Account> predicate = new SearchCondition(name);
-            Functor<Account, Account> functor = new SearchAccount();
-
-            Operation operation = ccUtil.getSearchCommand(predicate, functor);
-            financialSystem.doOperation(operation);
-
-            Account account = functor.getValue();
-
-            long deposit = Long.parseLong(amountDeposit);
-
-            Transaction transaction = ccUtil.getAddEntryCommand(account, deposit, 'D');
-            financialSystem.doTransaction(transaction);
-
-            updateTable();
+            uiController.transaction(name, amountDeposit, 'D');
         }
     }
 
@@ -195,13 +167,11 @@ public class CardFrm extends MainUI {
     }
 
     public void updateTable() {
-        Functor<Account, java.util.List<Account>> functor = new ListAccountFunctor();
-        Operation operation = ccUtil.getListAccountCommand(functor);
-        financialSystem.doOperation(operation);
+        
 
         model = getNewTableModel();
 
-        for (Account account : functor.getValue()) {
+        for (Account account : uiController.getListOfAccounts()) {
             // add row to table
             rowdata[0] = account.getAccountNo();
             rowdata[1] = account.getCustomer().getName();
@@ -224,6 +194,11 @@ public class CardFrm extends MainUI {
         model.addColumn("Type");
         model.addColumn("Balance");
         return model;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        updateTable();
     }
 
 }

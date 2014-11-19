@@ -3,14 +3,6 @@ package creditcard.ui;
 /*
  A basic implementation of the JDialog class.
  */
-import creditcard.component.CCUtil;
-import framework.FinancialSystem;
-import framework.factory.ReportFactory;
-import framework.model.Account;
-import framework.operation.Functor;
-import framework.operation.Operation;
-import framework.report.MonthlyReport;
-import java.awt.*;
 
 public class JDialogGenBill extends javax.swing.JDialog {
 
@@ -40,12 +32,8 @@ public class JDialogGenBill extends javax.swing.JDialog {
         getContentPane().add(JButton_OK);
         JButton_OK.setBounds(156, 276, 96, 24);
 
-        Functor<Account, String> monthlyReport = ReportFactory.getInstance("MONTHLY");
-        Operation operation = cardFrm.ccUtil.getGenerateReportCommand(monthlyReport);
-        cardFrm.financialSystem.doOperation(operation);
-
-        System.out.println(monthlyReport.getValue());
-        JTextArea1.setText(monthlyReport.getValue());
+        System.out.println(cardFrm.uiController.generateReport());
+        JTextArea1.setText(cardFrm.uiController.generateReport());
 		//}}
 
         //{{REGISTER_LISTENERS

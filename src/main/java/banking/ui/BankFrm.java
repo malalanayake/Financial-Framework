@@ -1,25 +1,16 @@
 package banking.ui;
 
-import banking.component.BankUtil;
-import framework.FinancialSystem;
 import framework.model.Account;
-import framework.model.Customer;
-import framework.operation.Functor;
-import framework.operation.ListAccountFunctor;
-import framework.operation.Operation;
-import framework.operation.Predicate;
-import framework.operation.SearchAccount;
-import framework.operation.SearchCondition;
-import framework.operation.Transaction;
 import framework.ui.MainUI;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends MainUI {
+public class BankFrm extends MainUI implements Observer {
 
     /**
      * **
@@ -28,15 +19,15 @@ public class BankFrm extends MainUI {
     String accountnr, clientName, street, city, zip, state, accountType, clientType,
             amountDeposit, email, birthdate, numberofEmployees;
     BankFrm myframe;
-    BankUtil bankUtil;
-    FinancialSystem financialSystem;
     protected boolean newaccount;
+
+    BankingUIController uiController;
 
     public BankFrm() {
         myframe = this;
-        bankUtil = new BankUtil();
-        financialSystem = new FinancialSystem(this);
-        
+
+        uiController = new BankingUIController(this);
+
         rowdata = new Object[8];
         // rowdata = new Object[8];
         newaccount = false;
@@ -55,32 +46,23 @@ public class BankFrm extends MainUI {
         System.exit(0);
     }
 
+    // Action Listener for Add personal account
     @Override
     public void JButtonOne_actionPerformed(java.awt.event.ActionEvent event) {
-        /*
-         JDialog_AddPAcc type object is for adding personal information
-         construct a JDialog_AddPAcc type object 
-         set the boundaries and show it 
-         */
 
         JDialog_AddPAcc pac = new JDialog_AddPAcc(myframe);
         pac.setBounds(450, 20, 300, 330);
         pac.show();
 
-        if (accountType != null && !accountType.equals("")) {
-            Customer cutomer = bankUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
-            Account account = bankUtil.getAccount(accountnr, accountType, cutomer);
-            Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
-            financialSystem.doOperation(operationAddAccount);
-        }
-
         if (newaccount) {
-            updateTableModel();
+            uiController.addPersonalAccount(accountType, accountnr, clientName,
+                    street, city, state, zip, birthdate, email);
             newaccount = false;
         }
 
     }
 
+    // Action Listener for Add company account
     @Override
     public void JButtonTwo_actionPerformed(java.awt.event.ActionEvent event) {
         /*
@@ -93,20 +75,15 @@ public class BankFrm extends MainUI {
         pac.setBounds(450, 20, 300, 330);
         pac.show();
 
-        if (accountType != null && !accountType.equals("")) {
-            Customer cutomer = bankUtil.getCompany(clientName, street, city, state, zip, numberofEmployees, email);
-            Account account = bankUtil.getAccount(accountnr, accountType, cutomer);
-            Operation operationAddAccount = bankUtil.getAddAccountCommand(account);
-            financialSystem.doOperation(operationAddAccount);
-        }
-
         if (newaccount) {
-            updateTableModel();
+            uiController.addCompanyAccount(accountType, accountnr, clientName,
+                    street, city, state, zip, numberofEmployees, email);
             newaccount = false;
         }
 
     }
 
+    // Deposit
     @Override
     public void JButtonThree_actionPerformed(java.awt.event.ActionEvent event) {
         // get selected name
@@ -119,25 +96,13 @@ public class BankFrm extends MainUI {
             dep.setBounds(430, 15, 275, 140);
             dep.show();
 
-            Predicate<Account> predicate = new SearchCondition(accnr);
-            Functor<Account, Account> functor = new SearchAccount();
-
-            Operation operation = bankUtil.getSearchCommand(predicate, functor);
-            financialSystem.doOperation(operation);
-
-            Account account = functor.getValue();
-
-            long deposit = Long.parseLong(amountDeposit);
-
-            Transaction transaction = bankUtil.getAddEntryCommand(account, deposit, 'C');
-            financialSystem.doTransaction(transaction);
-
-            updateTableModel();
+            uiController.transaction(accnr, amountDeposit, 'C');
 
         }
 
     }
 
+    //Withdraw
     @Override
     public void JButtonFour_actionPerformed(java.awt.event.ActionEvent event) {
         // get selected name
@@ -150,40 +115,23 @@ public class BankFrm extends MainUI {
             wd.setBounds(430, 15, 275, 140);
             wd.show();
 
-            Predicate<Account> predicate = new SearchCondition(accnr);
-            Functor<Account, Account> functor = new SearchAccount();
-
-            Operation operation = bankUtil.getSearchCommand(predicate, functor);
-            financialSystem.doOperation(operation);
-
-            Account account = functor.getValue();
-
-            long deposit = Long.parseLong(amountDeposit);
-
-            Transaction transaction = bankUtil.getAddEntryCommand(account, deposit, 'D');
-            financialSystem.doTransaction(transaction);
-
-            updateTableModel();
+            uiController.transaction(accnr, amountDeposit, 'D');
         }
 
     }
 
+    // Add interest 
     @Override
     public void JButtonFive_actionPerformed(java.awt.event.ActionEvent event) {
-        Transaction transaction = bankUtil.getAddInterestCommand();
-        financialSystem.doTransaction(transaction);
-        updateTableModel();
+        uiController.addInterest();
         JOptionPane.showMessageDialog(JButton_Five, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
     }
 
     public void updateTableModel() {
-        Functor<Account, List<Account>> functor = new ListAccountFunctor();
-        Operation operation = bankUtil.getListAccountCommand(functor);
-        financialSystem.doOperation(operation);
 
         model = getNewTableModel();
 
-        for (Account account : functor.getValue()) {
+        for (Account account : uiController.getListOfAccounts()) {
             // add row to table
             rowdata[0] = account.getAccountNo();
             rowdata[1] = account.getCustomer().getName();
@@ -249,5 +197,10 @@ public class BankFrm extends MainUI {
         JButton_Six.setText("Exit");
         mainPanel.add(JButton_Six);
         JButton_Six.setBounds(468, 248, 96, 31);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        updateTableModel();
     }
 }
