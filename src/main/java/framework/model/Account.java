@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
 
 /**
  *
@@ -15,6 +14,7 @@ public abstract class Account implements IAccount {
     private Customer customer;
     private String accountNo;
     private double amount;
+    private String expDate; 
     private List<Entry> entries;
 
     public Account(String accountNo, Customer customer) {
@@ -30,6 +30,8 @@ public abstract class Account implements IAccount {
         this.entries.add(entry);
 
         this.amount += amount;
+        
+        notifyToCustomer(entry, this);
 
     }
 
@@ -63,7 +65,7 @@ public abstract class Account implements IAccount {
         for (Entry entry : this.entries) {
             if (entry.getDate().getMonth() == month) {
                 if (entry.getAmount() < 0) {
-                    charge = charge + entry.getAmount();
+                    charge = charge - entry.getAmount();
                 }
             }
         }
@@ -89,8 +91,8 @@ public abstract class Account implements IAccount {
     }
 
     @Override
-    public void notifyToCustomer() {
-        this.getCustomer().sendAlert(this);
+    public void notifyToCustomer(Entry entry, Account account) {
+        this.getCustomer().sendAlert(entry, account);
     }
 
     public abstract double getInterestRate();
@@ -123,4 +125,13 @@ public abstract class Account implements IAccount {
         this.amount = amount;
     }
 
+    public String getExpDate() {
+        return expDate;
+    }
+
+    public void setExpDate(String expDate) {
+        this.expDate = expDate;
+    }
+
+    
 }

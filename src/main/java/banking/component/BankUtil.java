@@ -1,6 +1,7 @@
 package banking.component;
 
-import banking.factory.AccountFactory;
+import banking.factory.BankingAccountFactory;
+import banking.factory.BankingCustomerFactory;
 import framework.factory.CustomerFactory;
 import framework.model.Account;
 import framework.model.Company;
@@ -28,7 +29,7 @@ public class BankUtil {
     }
 
     public Customer getPersonal(String name, String stree, String city, String state, String zip, String bdate, String email) {
-        Personal personal = (Personal) CustomerFactory.getInstance("PERSONAL");
+        Personal personal = (Personal) BankingCustomerFactory.getInstance("PERSONAL");
         personal.setName(name);
         personal.getAddress().setStreet(stree);
         personal.getAddress().setCity(city);
@@ -53,7 +54,7 @@ public class BankUtil {
     }
 
     public Account getAccount(String accountNr, String accountType, Customer customer) {
-        Account account = AccountFactory.getInstance(accountNr, customer, accountType);
+        Account account = BankingAccountFactory.getInstance(accountNr, customer, accountType);
         return account;
     }
 

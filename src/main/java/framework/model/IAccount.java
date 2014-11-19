@@ -14,7 +14,7 @@ public interface IAccount {
 
     public double getInterestRate();
 
-    public void notifyToCustomer();
+    public void notifyToCustomer(Entry entry, Account account);
 
     public ICustomer getCustomer();
 }

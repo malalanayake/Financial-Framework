@@ -24,7 +24,7 @@ public class Company extends Customer implements IOrganizational {
     }
 
     @Override
-    public void sendAlert(Account account) {
+    public void sendAlert(Entry entry, Account account) {
         System.out.println("Alert has been sent to " + this.getEmail());
     }
 }

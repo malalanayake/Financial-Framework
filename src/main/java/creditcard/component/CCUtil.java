@@ -1,6 +1,7 @@
 package creditcard.component;
 
-import creditcard.factory.AccountFactory;
+import creditcard.factory.CreditCardAccountFactory;
+import creditcard.factory.CreditCardCustomerFactory;
 import framework.factory.CustomerFactory;
 import framework.model.Account;
 import framework.model.Customer;
@@ -23,7 +24,7 @@ import java.util.List;
 public class CCUtil {
 
     public Customer getPersonal(String name, String stree, String city, String state, String zip, String bdate, String email) {
-        Personal personal = (Personal) CustomerFactory.getInstance("PERSONAL");
+        Personal personal = (Personal) CreditCardCustomerFactory.getInstance("PERSONAL");
         personal.setName(name);
         personal.getAddress().setStreet(stree);
         personal.getAddress().setCity(city);
@@ -35,8 +36,9 @@ public class CCUtil {
         return personal;
     }
 
-    public Account getAccount(String accountNr, String accountType, Customer customer) {
-        Account account = AccountFactory.getInstance(accountNr, customer, accountType);
+    public Account getAccount(String accountNr, String accountType, Customer customer, String expDate) {
+        Account account = CreditCardAccountFactory.getInstance(accountNr, customer, accountType);
+        account.setExpDate(expDate);
         return account;
     }
 

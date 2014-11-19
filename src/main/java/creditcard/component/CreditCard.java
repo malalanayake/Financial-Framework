@@ -19,13 +19,13 @@ public abstract class CreditCard extends Account {
         String newLine = System.lineSeparator();
 
         output.append(newLine);
-        output.append("Previous Balance :" + this.getPreviousBalance() + "\r\n");
-        output.append("Total Charges :" + this.getTotalDebitForThisMonth() + "\r\n");
-        output.append("Total Credits :" + this.getTotalCreditForThisMonth() + "\r\n");
-        double balance = this.getPreviousBalance() - this.getTotalCreditForThisMonth()
+        output.append("Previous Balance :").append(this.getPreviousBalance()).append(newLine);
+        output.append("Total Charges :").append(this.getTotalDebitForThisMonth()).append(newLine);
+        output.append("Total Credits :").append(this.getTotalCreditForThisMonth()).append(newLine);
+        double balance = this.getPreviousBalance() - this.getTotalCreditForThisMonth() + this.getTotalDebitForThisMonth() +
                 + this.getInterestRate() * (this.getPreviousBalance() - this.getTotalCreditForThisMonth());
-        output.append("New Balance :" + balance + "\r\n");
-        output.append("Due Amount :" + balance * this.getMinimumPaymentRate());
+        output.append("New Balance :").append(balance).append(newLine);
+        output.append("Due Amount :").append(balance * this.getMinimumPaymentRate());
         output.append(newLine);
 
         return output.toString();

@@ -25,7 +25,7 @@ public class Personal extends Customer implements IPersonal {
     }
 
     @Override
-    public void sendAlert(Account account) {       
+    public void sendAlert(Entry entry, Account account) {       
         System.out.println("Alert has been sent to " + this.getEmail());
     }
 }

@@ -16,5 +16,5 @@ public interface ICustomer {
 
     public List<IAccount> getAccounts();
     
-    public void sendAlert(Account account);
+    public void sendAlert(Entry entry, Account account);
 }

@@ -9,7 +9,7 @@ import framework.model.Customer;
  *
  * @author malalanayake
  */
-public class AccountFactory {
+public class BankingAccountFactory {
 
     public static Account getInstance(String accountNr, Customer customer, String type) {
         switch (type) {

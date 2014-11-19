@@ -112,7 +112,7 @@ public class CardFrm extends MainUI {
 
         if (newaccount) {
             Customer customer = ccUtil.getPersonal(clientName, street, city, state, zip, birthdate, email);
-            Account account = ccUtil.getAccount(ccnumber, accountType, customer);
+            Account account = ccUtil.getAccount(ccnumber, accountType, customer, expdate);
             Operation operation = ccUtil.getAddAccountCommand(account);
             financialSystem.doOperation(operation);
             updateTable();
@@ -205,7 +205,7 @@ public class CardFrm extends MainUI {
             // add row to table
             rowdata[0] = account.getAccountNo();
             rowdata[1] = account.getCustomer().getName();
-            rowdata[2] = "";
+            rowdata[2] = account.getExpDate();
             rowdata[3] = account.getAccountType();
             rowdata[4] = account.getAmount();
             model.addRow(rowdata);
