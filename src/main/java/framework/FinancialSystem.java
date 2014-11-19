@@ -41,11 +41,11 @@ public class FinancialSystem {
     }
 
     public void doOperation(Operation operation) {
-        operation.execute();
+        this.operationManager.doOperation(operation);
     }
 
     public void doTransaction(Transaction transaction) {
-        transaction.execute();
+        this.transactionManager.doTransaction(transaction);
     }
 
 }

@@ -6,4 +6,7 @@ package framework.operation;
  */
 public class OperationManager {
 
+    public void doOperation(Operation operation) {
+        operation.execute();
+    }
 }
