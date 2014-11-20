@@ -1,28 +1,16 @@
 package creditcard.ui;
 
-import creditcard.component.CCUtil;
-import framework.FinancialSystem;
 import framework.model.Account;
-import framework.model.Customer;
-import framework.operation.Functor;
-import framework.operation.ListAccountFunctor;
-import framework.operation.Operation;
-import framework.operation.Predicate;
-import framework.operation.SearchAccount;
-import framework.operation.SearchCondition;
-import framework.operation.Transaction;
-import framework.ui.MainUI;
-import java.awt.*;
+import framework.ui.DefaultUI;
 import java.awt.event.ActionEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
 
 /**
  * A basic JFC based application.
  */
-public class CardFrm extends MainUI implements Observer {
+public class CardFrm extends DefaultUI implements Observer {
 
     /**
      * **
@@ -33,12 +21,12 @@ public class CardFrm extends MainUI implements Observer {
 
     boolean newaccount;
     CardFrm thisframe;
-    CreditCardUIController uiController;
+    CreditCardController uiController;
     
     public CardFrm() {
         thisframe = this;
 
-        uiController = new CreditCardUIController(this);
+        uiController = new CreditCardController(this);
         
         
         

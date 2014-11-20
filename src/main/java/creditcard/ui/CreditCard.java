@@ -1,4 +1,4 @@
-package banking.ui;
+package creditcard.ui;
 
 import framework.FinancialSystem;
 
@@ -6,10 +6,10 @@ import framework.FinancialSystem;
  *
  * @author malalanayake
  */
-public class Main {
+public class CreditCard {
 
     public static void main(String[] args) {
-        FinancialSystem financialSystem = new FinancialSystem(new BankFrm());
+        FinancialSystem financialSystem = new FinancialSystem(new CardFrm());
         financialSystem.execute();
     }
 }

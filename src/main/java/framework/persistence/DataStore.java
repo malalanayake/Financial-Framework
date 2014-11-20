@@ -8,7 +8,6 @@ package framework.persistence;
 
 import framework.model.Account;
 import framework.model.Customer;
-import framework.model.ICustomer;
 import java.util.List;
 
 /**

@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author malalanayake
  */
-public abstract class Account implements IAccount {
+public class Account implements IAccount {
 
     private Customer customer;
     private String accountNo;
@@ -23,6 +23,7 @@ public abstract class Account implements IAccount {
         this.entries = new ArrayList<>();
     }
 
+    @Override
     public void addEntry(double amount) {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
@@ -35,6 +36,7 @@ public abstract class Account implements IAccount {
 
     }
 
+    @Override
     public void addInterest() {
         double rate = this.getInterestRate();
         double interest = this.amount * rate;
@@ -95,12 +97,22 @@ public abstract class Account implements IAccount {
         this.getCustomer().sendAlert(entry, account);
     }
 
-    public abstract double getInterestRate();
+    @Override
+    public double getInterestRate() {
+        return 0.1;
+    }
 
-    public abstract String getAccountType();
-    
-    public abstract String getReportOutPut();
+    @Override
+    public String getAccountType() {
+        return "Default Account";
+    }
 
+    public String getReportOutPut() {
+        return "Type :" + this.getAccountNo()
+                + "\n\n Balance :" + this.getAmount();
+    }
+
+    @Override
     public Customer getCustomer() {
         return customer;
     }

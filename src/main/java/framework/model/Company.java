@@ -1,7 +1,5 @@
 package framework.model;
 
-import java.util.Observable;
-
 /**
  *
  * @author malalanayake

@@ -8,7 +8,6 @@ package framework.ui;
 import framework.FinancialSystem;
 import framework.model.Account;
 import framework.model.Customer;
-import framework.model.DefaultAccount;
 import framework.model.Personal;
 import framework.operation.AddAccount;
 import framework.operation.AddEntry;
@@ -29,11 +28,11 @@ import java.util.Observable;
  *
  * @author B.Pirasanth
  */
-public class DefaultUIController extends Observable {
+public class DefaultController extends Observable {
 
-    private FinancialSystem financialSystem;
+    protected FinancialSystem financialSystem;
 
-    public DefaultUIController(DefaultUI defaultUI) {
+    public DefaultController(DefaultUI defaultUI) {
         financialSystem = new FinancialSystem(defaultUI);
 
         this.addObserver(defaultUI);
@@ -44,7 +43,7 @@ public class DefaultUIController extends Observable {
             String zip, String birthdate, String email) {
 
         Customer cutomer = getPersonal(clientName, street, city, state, zip, birthdate, email);
-        Account account = new DefaultAccount(accountnr, cutomer);
+        Account account = new Account(accountnr, cutomer);
         Operation operationAddAccount = new AddAccount(account);
         financialSystem.doOperation(operationAddAccount);
 

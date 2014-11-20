@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author malalanayake
  */
-public class Entry {
+public class Entry implements IEntry {
 
     private Date date;
     private double amount;

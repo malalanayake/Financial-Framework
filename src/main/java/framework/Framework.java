@@ -11,7 +11,7 @@ import framework.ui.DefaultUI;
  *
  * @author B.Pirasanth
  */
-public class Main {
+public class Framework {
     public static  void main(String args[]) {
         FinancialSystem financialSystem = new FinancialSystem(new DefaultUI());
         financialSystem.execute();

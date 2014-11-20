@@ -18,13 +18,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DefaultUI extends MainUI implements Observer {
 
-    DefaultUIController uiController;
+    DefaultController uiController;
     String accountnr, clientName, street, city, zip, state, accountType, clientType,
             amountDeposit, email, birthdate, numberofEmployees;
     
     protected boolean newaccount;
     public DefaultUI() {
-        uiController = new DefaultUIController(this);
+        uiController = new DefaultController(this);
         
         rowdata = new Object[8];
         // rowdata = new Object[8];

@@ -1,6 +1,7 @@
 package banking.ui;
 
 import framework.model.Account;
+import framework.ui.DefaultUI;
 import framework.ui.MainUI;
 import java.util.Observable;
 import java.util.Observer;
@@ -10,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * A basic JFC based application.
  */
-public class BankFrm extends MainUI implements Observer {
+public class BankFrm extends DefaultUI implements Observer {
 
     /**
      * **
@@ -21,12 +22,12 @@ public class BankFrm extends MainUI implements Observer {
     BankFrm myframe;
     protected boolean newaccount;
 
-    BankingUIController uiController;
+    BankController uiController;
 
     public BankFrm() {
         myframe = this;
 
-        uiController = new BankingUIController(this);
+        uiController = new BankController(this);
 
         rowdata = new Object[8];
         // rowdata = new Object[8];
